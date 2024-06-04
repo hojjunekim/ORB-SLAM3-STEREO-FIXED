@@ -38,7 +38,7 @@ find_package(OpenCV 4.2)
 MESSAGE("OPENCV VERSION:")
 MESSAGE(${OpenCV_VERSION})
 
-set(CMAKE_MODULE_PATH "/home/thirdparty/ORB-SLAM3/modules")
+set(CMAKE_MODULE_PATH "/home/thirdparty/ORB_SLAM3/modules")
 find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 find_package(epoxy REQUIRED)
