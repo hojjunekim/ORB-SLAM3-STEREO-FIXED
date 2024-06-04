@@ -38,6 +38,7 @@ find_package(OpenCV 4.2)
 MESSAGE("OPENCV VERSION:")
 MESSAGE(${OpenCV_VERSION})
 
+set(CMAKE_MODULE_PATH "/usr/include/epoxy")
 find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 find_package(epoxy REQUIRED)
