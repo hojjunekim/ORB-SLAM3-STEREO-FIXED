@@ -237,7 +237,8 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     }
 
     // Fix verbosity
-    Verbose::SetTh(Verbose::VERBOSITY_QUIET);
+    Verbose::SetTh(Verbose::VERBOSITY_NORMAL);
+    // Verbose::SetTh(Verbose::VERBOSITY_QUIET);
 
 }
 
@@ -625,6 +626,44 @@ void System::SaveTrajectoryTUM(const string &filename)
     f.close();
     // cout << endl << "trajectory saved!" << endl;
 }
+
+vector<KeyFrame*> System::GetAllKeyFrames()
+{
+    // get mspKeyFrames
+    return mpAtlas->GetAllKeyFrames();
+}
+
+long unsigned int System::KeyFramesInMap()
+{
+    // get the number of mspKeyFrames
+    return mpAtlas->KeyFramesInMap();
+}
+
+int System::GetLastBigChangeIdx()
+{
+    // get mnBigChangeIdx where it adds one when loop closure is performed(?)
+    return mpAtlas->GetLastBigChangeIdx();
+}
+
+long unsigned int System::GetNumLivedKF()
+{
+    // get the number of mspKeyFrames of all pMap in mspMaps
+    return mpAtlas->GetNumLivedKF();
+}
+
+long unsigned int System::GetNumLivedMP()
+{
+    // get the number of mappoints of all pMap in mspMaps
+    return mpAtlas->GetNumLivedMP();
+}
+
+map<long unsigned int, KeyFrame*> System::GetAtlasKeyframes()
+{
+    // get keyframes according to the mnId in every pMap in mvpBackupMaps
+    return mpAtlas->GetAtlasKeyframes();
+}
+
+
 
 void System::SaveKeyFrameTrajectoryTUM(const string &filename)
 {
