@@ -397,6 +397,31 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, const
     return Tcw;
 }
 
+int System::LocalMappingNumBA()
+{
+    return mpLocalMapper->vnLBA_edges.size();
+}
+
+Sophus::SE3f System::LocalMappingDeltaTKFBA()
+{
+    Sophus::SE3f TwKF_bef = mpLocalMapper->mTwKFBefBA;
+    Sophus::SE3f TwKF_aft = mpLocalMapper->mTwKFAftBA;
+    return TwKF_bef.inverse()*TwKF_aft;
+}
+
+int System::LoopClosingNumMergeLocal()
+{
+    return mpLoopCloser->mNumMergeLocal;
+}
+
+Sophus::SE3f System::LoopClosingDeltaTKFBA()
+{
+    Sophus::SE3f TwKF_bef = mpLoopCloser->mTwKFBefBA;
+    Sophus::SE3f TwKF_aft = mpLoopCloser->mTwKFAftBA;
+    return TwKF_bef.inverse()*TwKF_aft;
+}
+
+
 Sophus::SE3f System::TrackMonocular(const cv::Mat &im, const double &timestamp, const vector<IMU::Point>& vImuMeas, string filename)
 {
 
@@ -626,44 +651,6 @@ void System::SaveTrajectoryTUM(const string &filename)
     f.close();
     // cout << endl << "trajectory saved!" << endl;
 }
-
-vector<KeyFrame*> System::GetAllKeyFrames()
-{
-    // get mspKeyFrames
-    return mpAtlas->GetAllKeyFrames();
-}
-
-long unsigned int System::KeyFramesInMap()
-{
-    // get the number of mspKeyFrames
-    return mpAtlas->KeyFramesInMap();
-}
-
-int System::GetLastBigChangeIdx()
-{
-    // get mnBigChangeIdx where it adds one when loop closure is performed(?)
-    return mpAtlas->GetLastBigChangeIdx();
-}
-
-long unsigned int System::GetNumLivedKF()
-{
-    // get the number of mspKeyFrames of all pMap in mspMaps
-    return mpAtlas->GetNumLivedKF();
-}
-
-long unsigned int System::GetNumLivedMP()
-{
-    // get the number of mappoints of all pMap in mspMaps
-    return mpAtlas->GetNumLivedMP();
-}
-
-map<long unsigned int, KeyFrame*> System::GetAtlasKeyframes()
-{
-    // get keyframes according to the mnId in every pMap in mvpBackupMaps
-    return mpAtlas->GetAtlasKeyframes();
-}
-
-
 
 void System::SaveKeyFrameTrajectoryTUM(const string &filename)
 {

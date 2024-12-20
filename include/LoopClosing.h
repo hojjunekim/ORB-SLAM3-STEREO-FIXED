@@ -84,6 +84,11 @@ public:
 
     Viewer* mpViewer;
 
+    Sophus::SE3f mTwKFBefBA = Sophus::SE3f();
+    Sophus::SE3f mTwKFAftBA = Sophus::SE3f();
+
+    int mNumMergeLocal = 0;
+
 #ifdef REGISTER_TIMES
 
     vector<double> vdDataQuery_ms;

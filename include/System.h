@@ -187,6 +187,11 @@ public:
 
     float GetImageScale();
 
+    int System::LocalMappingNumBA();
+    int System::LoopClosingNumMergeLocal();
+    Sophus::SE3f System::LocalMappingDeltaTKFBA();
+    Sophus::SE3f System::LoopClosingDeltaTKFBA();
+
 #ifdef REGISTER_TIMES
     void InsertRectTime(double& time);
     void InsertResizeTime(double& time);

@@ -110,6 +110,8 @@ public:
     // not consider far points (clouds)
     bool mbFarPoints;
     float mThFarPoints;
+    Sophus::SE3f mTwKFBefBA = Sophus::SE3f();
+    Sophus::SE3f mTwKFAftBA = Sophus::SE3f();
 
 #ifdef REGISTER_TIMES
     vector<double> vdKFInsert_ms;

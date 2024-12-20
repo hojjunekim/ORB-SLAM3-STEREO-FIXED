@@ -99,6 +99,9 @@ public:
     void static InertialOptimization(Map *pMap, Eigen::Matrix3d &Rwg, double &scale);
 
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+
+    Sophus::SE3f TKFw_before_BA = Sophus::SE3f();
+    Sophus::SE3f TKFw_after_BA = Sophus::SE3f();
 };
 
 } //namespace ORB_SLAM3
