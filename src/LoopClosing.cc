@@ -177,10 +177,13 @@ void LoopClosing::Run()
                         nMerges += 1;
 #endif
                         // TODO UNCOMMENT
+                        mTKFwBefBA = mpCurrentKF->GetPose();
                         if (mpTracker->mSensor==System::IMU_MONOCULAR ||mpTracker->mSensor==System::IMU_STEREO || mpTracker->mSensor==System::IMU_RGBD)
                             MergeLocal2();
                         else
                             MergeLocal();
+                        mTKFwAftBA = mpCurrentKF->GetPose();
+                        mNumMergeLocal += 1;
 
 #ifdef REGISTER_TIMES
                         std::chrono::steady_clock::time_point time_EndMerge = std::chrono::steady_clock::now();
@@ -262,7 +265,7 @@ void LoopClosing::Run()
                     }
 
                     if (bGoodLoop) {
-
+                        cout << "Good loop!!" << endl;
                         mvpLoopMapPoints = mvpLoopMPs;
 
 #ifdef REGISTER_TIMES
@@ -271,7 +274,9 @@ void LoopClosing::Run()
                         nLoop += 1;
 
 #endif
+                        mTKFwBefLoop = mpCurrentKF->GetPose();
                         CorrectLoop();
+                        mTKFwAftLoop = mpCurrentKF->GetPose();
 #ifdef REGISTER_TIMES
                         std::chrono::steady_clock::time_point time_EndLoop = std::chrono::steady_clock::now();
 
@@ -1619,7 +1624,6 @@ void LoopClosing::MergeLocal()
     std::copy(spLocalWindowKFs.begin(), spLocalWindowKFs.end(), std::back_inserter(vpLocalCurrentWindowKFs));
     std::copy(spMergeConnectedKFs.begin(), spMergeConnectedKFs.end(), std::back_inserter(vpMergeConnectedKFs));
     
-    mTwKFBefBA = mpCurrentKF->GetPose();
     if (mpTracker->mSensor==System::IMU_MONOCULAR || mpTracker->mSensor==System::IMU_STEREO || mpTracker->mSensor==System::IMU_RGBD)
     {
         Optimizer::MergeInertialBA(mpCurrentKF,mpMergeMatchedKF,&bStop, pCurrentMap,vCorrectedSim3);
@@ -1771,9 +1775,6 @@ void LoopClosing::MergeLocal()
         mpThreadGBA = new thread(&LoopClosing::RunGlobalBundleAdjustment,this, pMergeMap, mpCurrentKF->mnId);
     }
 
-    mTwKFAftBA = mpCurrentKF->GetPose();
-    mNumMergeLocal++;
-    
     mpMergeMatchedKF->AddMergeEdge(mpCurrentKF);
     mpCurrentKF->AddMergeEdge(mpMergeMatchedKF);
 
