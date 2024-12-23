@@ -176,6 +176,10 @@ public:
 
     bool mbWriteStats;
 
+    Sophus::SE3f mTKFwBefReset;
+    Sophus::SE3f mTKFwAftReset;
+    int mNumResets;
+
 #ifdef REGISTER_TIMES
     void LocalMapStats2File();
     void TrackStats2File();

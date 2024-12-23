@@ -238,8 +238,8 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     }
 
     // Fix verbosity
-    Verbose::SetTh(Verbose::VERBOSITY_NORMAL);
-    // Verbose::SetTh(Verbose::VERBOSITY_QUIET);
+    // Verbose::SetTh(Verbose::VERBOSITY_NORMAL);
+    Verbose::SetTh(Verbose::VERBOSITY_QUIET);
 
 }
 
@@ -396,6 +396,18 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, const
     mTrackedMapPoints = mpTracker->mCurrentFrame.mvpMapPoints;
     mTrackedKeyPointsUn = mpTracker->mCurrentFrame.mvKeysUn;
     return Tcw;
+}
+
+int System::TrackingNumReset()
+{
+    return mpTracker->mNumResets;
+}
+
+Sophus::SE3f System::TrackingDeltaTKFReset()
+{
+    Sophus::SE3f TKFw_bef = mpTracker->mTKFwBefReset;
+    Sophus::SE3f TKFw_aft = mpTracker->mTKFwAftReset;
+    return TKFw_bef;
 }
 
 int System::LocalMappingNumBA()

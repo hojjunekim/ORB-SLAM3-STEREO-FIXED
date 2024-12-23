@@ -177,12 +177,12 @@ void LoopClosing::Run()
                         nMerges += 1;
 #endif
                         // TODO UNCOMMENT
-                        mTKFwBefBA = mpCurrentKF->GetPose();
+                        mTKFwBefMerge = mpCurrentKF->GetPose();
                         if (mpTracker->mSensor==System::IMU_MONOCULAR ||mpTracker->mSensor==System::IMU_STEREO || mpTracker->mSensor==System::IMU_RGBD)
                             MergeLocal2();
                         else
                             MergeLocal();
-                        mTKFwAftBA = mpCurrentKF->GetPose();
+                        mTKFwAftMerge = mpCurrentKF->GetPose();
                         mNumMergeLocal += 1;
 
 #ifdef REGISTER_TIMES

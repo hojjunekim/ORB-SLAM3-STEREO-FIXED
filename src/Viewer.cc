@@ -352,6 +352,7 @@ void Viewer::Run()
             menuFollowCamera = true;
             mpSystem->ResetActiveMap();
             menuReset = false;
+            mpTracker->mNumResets = -1;
         }
 
         if(menuStop)

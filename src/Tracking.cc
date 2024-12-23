@@ -1966,6 +1966,7 @@ void Tracking::Track()
                     else if(pCurrentMap->KeyFramesInMap()>10)
                     {
                         // cout << "KF in map: " << pCurrentMap->KeyFramesInMap() << endl;
+                        mTKFwBefReset = mCurrentFrame.GetPose();
                         mState = RECENTLY_LOST;
                         mTimeStampLost = mCurrentFrame.mTimeStamp;
                     }
@@ -2284,6 +2285,8 @@ void Tracking::Track()
                 }
 
             CreateMapInAtlas();
+            mTKFwAftReset = mCurrentFrame.GetPose();
+            mNumResets++;
 
             return;
         }
@@ -3881,7 +3884,7 @@ void Tracking::ResetActiveMap(bool bLocMap)
     list<bool> lbLost;
     // lbLost.reserve(mlbLost.size());
     unsigned int index = mnFirstFrameId;
-    cout << "mnFirstFrameId = " << mnFirstFrameId << endl;
+    // cout << "mnFirstFrameId = " << mnFirstFrameId << endl;
     for(Map* pMap : mpAtlas->GetAllMaps())
     {
         if(pMap->GetAllKeyFrames().size() > 0)
@@ -3893,7 +3896,7 @@ void Tracking::ResetActiveMap(bool bLocMap)
 
     //cout << "First Frame id: " << index << endl;
     int num_lost = 0;
-    cout << "mnInitialFrameId = " << mnInitialFrameId << endl;
+    // cout << "mnInitialFrameId = " << mnInitialFrameId << endl;
 
     for(list<bool>::iterator ilbL = mlbLost.begin(); ilbL != mlbLost.end(); ilbL++)
     {
@@ -3907,7 +3910,7 @@ void Tracking::ResetActiveMap(bool bLocMap)
 
         index++;
     }
-    cout << num_lost << " Frames set to lost" << endl;
+    // cout << num_lost << " Frames set to lost" << endl;
 
     mlbLost = lbLost;
 
@@ -3924,6 +3927,9 @@ void Tracking::ResetActiveMap(bool bLocMap)
 
     if(mpViewer)
         mpViewer->Release();
+
+    mTKFwAftReset = mCurrentFrame.GetPose();
+    mNumResets++;
 
     Verbose::PrintMess("   End reseting! ", Verbose::VERBOSITY_NORMAL);
 }
