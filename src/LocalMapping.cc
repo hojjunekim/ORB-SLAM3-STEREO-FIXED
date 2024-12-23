@@ -155,6 +155,7 @@ void LocalMapping::Run()
                         b_doneLBA = true;
                     }
                     mTwKFAftBA = mpCurrentKeyFrame->GetPose();
+                    mNumBA++;
                 }
 #ifdef REGISTER_TIMES
                 std::chrono::steady_clock::time_point time_EndLBA = std::chrono::steady_clock::now();

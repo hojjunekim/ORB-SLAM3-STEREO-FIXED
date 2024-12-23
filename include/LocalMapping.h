@@ -112,6 +112,7 @@ public:
     float mThFarPoints;
     Sophus::SE3f mTwKFBefBA = Sophus::SE3f();
     Sophus::SE3f mTwKFAftBA = Sophus::SE3f();
+    int mNumBA = 0;
 
 #ifdef REGISTER_TIMES
     vector<double> vdKFInsert_ms;

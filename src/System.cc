@@ -399,7 +399,7 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, const
 
 int System::LocalMappingNumBA()
 {
-    return mpLocalMapper->vnLBA_edges.size();
+    return mpLocalMapper->mNumBA;
 }
 
 Sophus::SE3f System::LocalMappingDeltaTKFBA()
