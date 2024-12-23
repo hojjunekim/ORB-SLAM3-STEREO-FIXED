@@ -81,6 +81,7 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
         mStrLoadAtlasFromFile = settings_->atlasLoadFile();
         mStrSaveAtlasToFile = settings_->atlasSaveFile();
 
+        cout << "[System] Settings loaded from file" << endl;
         cout << (*settings_) << endl;
     }
     else{
@@ -404,9 +405,9 @@ int System::LocalMappingNumBA()
 
 Sophus::SE3f System::LocalMappingDeltaTKFBA()
 {
-    Sophus::SE3f TwKF_bef = mpLocalMapper->mTwKFBefBA;
-    Sophus::SE3f TwKF_aft = mpLocalMapper->mTwKFAftBA;
-    return TwKF_bef.inverse()*TwKF_aft;
+    Sophus::SE3f TKFw_bef = mpLocalMapper->mTKFwBefBA;
+    Sophus::SE3f TKFw_aft = mpLocalMapper->mTKFwAftBA;
+    return TKFw_bef*TKFw_aft.inverse();
 }
 
 int System::LoopClosingNumMergeLocal()
@@ -414,13 +415,24 @@ int System::LoopClosingNumMergeLocal()
     return mpLoopCloser->mNumMergeLocal;
 }
 
-Sophus::SE3f System::LoopClosingDeltaTKFBA()
+Sophus::SE3f System::LoopClosingDeltaTKFMerge()
 {
-    Sophus::SE3f TwKF_bef = mpLoopCloser->mTwKFBefBA;
-    Sophus::SE3f TwKF_aft = mpLoopCloser->mTwKFAftBA;
-    return TwKF_bef.inverse()*TwKF_aft;
+    Sophus::SE3f TKFw_bef = mpLoopCloser->mTKFwBefMerge;
+    Sophus::SE3f TKFw_aft = mpLoopCloser->mTKFwAftMerge;
+    return TKFw_bef*TKFw_aft.inverse();
 }
 
+int System::LoopClosingNumLoop()
+{
+    return mpLoopCloser->mnNumCorrection;
+}
+
+Sophus::SE3f System::LoopClosingDeltaTKFLoop()
+{
+    Sophus::SE3f TKFw_bef = mpLoopCloser->mTKFwBefLoop;
+    Sophus::SE3f TKFw_aft = mpLoopCloser->mTKFwAftLoop;
+    return TKFw_bef*TKFw_aft.inverse();
+}
 
 Sophus::SE3f System::TrackMonocular(const cv::Mat &im, const double &timestamp, const vector<IMU::Point>& vImuMeas, string filename)
 {

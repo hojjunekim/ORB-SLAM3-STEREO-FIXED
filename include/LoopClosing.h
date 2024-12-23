@@ -84,10 +84,13 @@ public:
 
     Viewer* mpViewer;
 
-    Sophus::SE3f mTwKFBefBA = Sophus::SE3f();
-    Sophus::SE3f mTwKFAftBA = Sophus::SE3f();
+    Sophus::SE3f mTKFwBefMerge = Sophus::SE3f();
+    Sophus::SE3f mTKFwAftMerge = Sophus::SE3f();
+    Sophus::SE3f mTKFwBefLoop = Sophus::SE3f();
+    Sophus::SE3f mTKFwAftLoop = Sophus::SE3f();
 
     int mNumMergeLocal = 0;
+    int mnNumCorrection;
 
 #ifdef REGISTER_TIMES
 
@@ -238,7 +241,6 @@ protected:
 
     //DEBUG
     string mstrFolderSubTraj;
-    int mnNumCorrection;
     int mnCorrectionGBA;
 
 

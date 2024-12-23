@@ -125,7 +125,7 @@ void LocalMapping::Run()
             {
                 if(mpAtlas->KeyFramesInMap()>2)
                 {
-                    mTwKFBefBA = mpCurrentKeyFrame->GetPose();
+                    mTKFwBefBA = mpCurrentKeyFrame->GetPose();
                     if(mbInertial && mpCurrentKeyFrame->GetMap()->isImuInitialized())
                     {
                         float dist = (mpCurrentKeyFrame->mPrevKF->GetCameraCenter() - mpCurrentKeyFrame->GetCameraCenter()).norm() +
@@ -154,7 +154,7 @@ void LocalMapping::Run()
                         Optimizer::LocalBundleAdjustment(mpCurrentKeyFrame,&mbAbortBA, mpCurrentKeyFrame->GetMap(),num_FixedKF_BA,num_OptKF_BA,num_MPs_BA,num_edges_BA);
                         b_doneLBA = true;
                     }
-                    mTwKFAftBA = mpCurrentKeyFrame->GetPose();
+                    mTKFwAftBA = mpCurrentKeyFrame->GetPose();
                     mNumBA++;
                 }
 #ifdef REGISTER_TIMES

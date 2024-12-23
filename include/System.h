@@ -187,10 +187,12 @@ public:
 
     float GetImageScale();
 
-    int LocalMappingNumBA();
-    int LoopClosingNumMergeLocal();
-    Sophus::SE3f LocalMappingDeltaTKFBA();
-    Sophus::SE3f LoopClosingDeltaTKFBA();
+    int System::LocalMappingNumBA();
+    int System::LoopClosingNumMergeLocal();
+    int System::LoopClosingNumLoop();
+    Sophus::SE3f System::LocalMappingDeltaTKFBA();
+    Sophus::SE3f System::LoopClosingDeltaTKFMerge();
+    Sophus::SE3f System::LoopClosingDeltaTKFLoop();
 
 #ifdef REGISTER_TIMES
     void InsertRectTime(double& time);
