@@ -1966,12 +1966,14 @@ void Tracking::Track()
                     else if(pCurrentMap->KeyFramesInMap()>10)
                     {
                         // cout << "KF in map: " << pCurrentMap->KeyFramesInMap() << endl;
+                        cout << "Track recently lost. save Tcw before reset" << endl;
                         mTKFwBefReset = mCurrentFrame.GetPose();
                         mState = RECENTLY_LOST;
                         mTimeStampLost = mCurrentFrame.mTimeStamp;
                     }
                     else
                     {
+                        cout << "Track lost. KF in map: " << pCurrentMap->KeyFramesInMap() << endl;
                         mState = LOST;
                     }
                 }
@@ -2022,7 +2024,11 @@ void Tracking::Track()
                         mpSystem->ResetActiveMap();
                         Verbose::PrintMess("Reseting current map...", Verbose::VERBOSITY_NORMAL);
                     }else
+                    {
                         CreateMapInAtlas();
+                        mNumResets++;
+                        cout << "Track lost. reset activated in the middle." << endl;
+                    }
 
                     if(mpLastKeyFrame)
                         mpLastKeyFrame = static_cast<KeyFrame*>(NULL);
@@ -2287,6 +2293,7 @@ void Tracking::Track()
             CreateMapInAtlas();
             mTKFwAftReset = mCurrentFrame.GetPose();
             mNumResets++;
+            cout << "Track lost. reset activated at the end" << endl;
 
             return;
         }
@@ -3930,6 +3937,7 @@ void Tracking::ResetActiveMap(bool bLocMap)
 
     mTKFwAftReset = mCurrentFrame.GetPose();
     mNumResets++;
+    cout << "Track lost. reset activated in ResetActiveMap" << endl;
 
     Verbose::PrintMess("   End reseting! ", Verbose::VERBOSITY_NORMAL);
 }

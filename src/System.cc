@@ -407,6 +407,7 @@ Sophus::SE3f System::TrackingDeltaTKFReset()
 {
     Sophus::SE3f TKFw_bef = mpTracker->mTKFwBefReset;
     Sophus::SE3f TKFw_aft = mpTracker->mTKFwAftReset;
+    mpTracker->mTKFwBefReset = Sophus::SE3f();
     return TKFw_bef;
 }
 
