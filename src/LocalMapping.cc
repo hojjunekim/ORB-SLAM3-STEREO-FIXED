@@ -125,7 +125,7 @@ void LocalMapping::Run()
             {
                 if(mpAtlas->KeyFramesInMap()>2)
                 {
-                    cout << "New KF. save Tcw before BA" << endl;
+                    // cout << "New KF. save Tcw before BA" << endl;
                     mTKFwBefBA = mpCurrentKeyFrame->GetPose();
                     if(mbInertial && mpCurrentKeyFrame->GetMap()->isImuInitialized())
                     {
@@ -156,7 +156,7 @@ void LocalMapping::Run()
                     }
                     mTKFwAftBA = mpCurrentKeyFrame->GetPose();
                     mNumBA++;
-                    cout << "New KF. save Tcw after BA" << endl;
+                    // cout << "New KF. save Tcw after BA" << endl;
                 }
 #ifdef REGISTER_TIMES
                 std::chrono::steady_clock::time_point time_EndLBA = std::chrono::steady_clock::now();

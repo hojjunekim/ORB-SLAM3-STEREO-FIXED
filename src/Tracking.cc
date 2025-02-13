@@ -3064,7 +3064,7 @@ bool Tracking::TrackLocalMap()
     }
     else
     {
-        if(mnMatchesInliers<30)
+        if(mnMatchesInliers<40)
             return false;
         else
             return true;

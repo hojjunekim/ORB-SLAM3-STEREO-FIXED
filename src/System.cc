@@ -238,8 +238,8 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     }
 
     // Fix verbosity
-    // Verbose::SetTh(Verbose::VERBOSITY_NORMAL);
-    Verbose::SetTh(Verbose::VERBOSITY_QUIET);
+    Verbose::SetTh(Verbose::VERBOSITY_NORMAL);
+    // Verbose::SetTh(Verbose::VERBOSITY_QUIET);
 
 }
 
@@ -426,6 +426,11 @@ Sophus::SE3f System::LocalMappingDeltaTKFBA()
 int System::LoopClosingNumMergeLocal()
 {
     return mpLoopCloser->mNumMergeLocal;
+}
+
+bool System::MergeDetected()
+{
+    return mpLoopCloser->mMergeDetected;
 }
 
 Sophus::SE3f System::LoopClosingDeltaTKFMerge()
@@ -1400,16 +1405,15 @@ double System::GetTimeFromIMUInit()
         return 0.f;
 }
 
-bool System::isLost()
+int System::isLost()
 {
     if (!mpAtlas->isImuInitialized())
-        return false;
+        return -1;
     else
     {
-        if ((mpTracker->mState==Tracking::LOST)) //||(mpTracker->mState==Tracking::RECENTLY_LOST))
-            return true;
-        else
-            return false;
+        if (mpTracker->mState==Tracking::LOST) return 0;
+        else if(mpTracker->mState==Tracking::RECENTLY_LOST) return 1;
+        else return 2;
     }
 }
 

@@ -89,9 +89,9 @@ public:
     Sophus::SE3f mTKFwBefLoop = Sophus::SE3f();
     Sophus::SE3f mTKFwAftLoop = Sophus::SE3f();
 
-    int mNumMergeLocal = 0;
+    int mNumMergeLocal;
     int mnNumCorrection;
-
+    bool mMergeDetected = false;
 #ifdef REGISTER_TIMES
 
     vector<double> vdDataQuery_ms;

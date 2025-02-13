@@ -180,7 +180,7 @@ public:
 
     // For debugging
     double GetTimeFromIMUInit();
-    bool isLost();
+    int isLost();
     bool isFinished();
 
     void ChangeDataset();
@@ -190,6 +190,7 @@ public:
     int TrackingNumReset();
     int LocalMappingNumBA();
     int LoopClosingNumMergeLocal();
+    bool MergeDetected();
     int LoopClosingNumLoop();
     Sophus::SE3f TrackingDeltaTKFReset();
     Sophus::SE3f LocalMappingDeltaTKFBA();
