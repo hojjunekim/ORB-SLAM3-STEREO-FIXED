@@ -131,6 +131,7 @@ void LoopClosing::Run()
                     {
                         mMergeDetected = true;
                         cout << "Merge detected!" << endl;
+                        mNumMergeLocal += 1;
 
                         Sophus::SE3d mTmw = mpMergeMatchedKF->GetPose().cast<double>();
                         g2o::Sim3 gSmw2(mTmw.unit_quaternion(), mTmw.translation(), 1.0);
@@ -185,7 +186,6 @@ void LoopClosing::Run()
                             MergeLocal();
                         mTKFwAftMerge = mpCurrentKF->GetPose();
                         mMergeDetected = false;
-                        mNumMergeLocal += 1;
 
 #ifdef REGISTER_TIMES
                         std::chrono::steady_clock::time_point time_EndMerge = std::chrono::steady_clock::now();
